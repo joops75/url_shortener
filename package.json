@@ -15,9 +15,9 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "mongodb": "^2.2.27",
     "mongoose": "^4.10.2",
     "pug": "^2.0.0-rc.1",
-    "valid-url": "^1.0.9",
-    "mongodb": "3.2.13"
+    "valid-url": "^1.0.9"
   }
 }
