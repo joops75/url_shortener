@@ -1,0 +1,23 @@
+{
+  "name": "url_shortener",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "engines": {
+    "npm": "2.15.11",
+    "node": "4.7.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Cooper",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.2",
+    "pug": "^2.0.0-rc.1",
+    "valid-url": "^1.0.9",
+    "mongodb": "3.2.13"
+  }
+}

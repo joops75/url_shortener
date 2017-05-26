@@ -1,0 +1,35 @@
+body {
+    background: url('http://wallpaper-gallery.net/images/circuitry-wallpaper/circuitry-wallpaper-3.jpg');
+    background-size: 100%;
+    font-family: 'Raleway', cursive;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+}
+
+h2 {
+    font-family: 'Kumar One', cursive;
+    color: rgb(230, 255, 255);
+}
+
+p {
+    width: 300px;
+    margin: auto;
+}
+
+input {
+    font-family: 'Raleway', cursive;
+    width: 200px;
+    margin: 20px 0px 20px 0px;
+}
+
+button {
+    font-family: 'Raleway', cursive;
+    margin: 20px 0px 20px 0px;
+    padding: 0px;
+}
+
+#link a {
+  color: cyan;
+}
