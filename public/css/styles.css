@@ -1,5 +1,6 @@
 body {
-    background: url('http://wallpaper-gallery.net/images/circuitry-wallpaper/circuitry-wallpaper-3.jpg');
+    /* background: url('http://wallpaper-gallery.net/images/circuitry-wallpaper/circuitry-wallpaper-3.jpg'); */
+    background: url('/images/circuitry-wallpaper-3.jpg');
     background-size: 100%;
     font-family: 'Raleway', cursive;
     text-align: center;
@@ -8,14 +9,15 @@ body {
     margin: 20px;
 }
 
+#frame {
+    min-width: 300px;
+    max-width: 600px;
+    margin: auto;
+}
+
 h2 {
     font-family: 'Kumar One', cursive;
     color: rgb(230, 255, 255);
-}
-
-p {
-    width: 300px;
-    margin: auto;
 }
 
 input {

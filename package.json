@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "engines": {
-    "npm": "2.15.11",
-    "node": "4.8.4"
+    "npm": "5.6.0",
+    "node": "8.11.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,10 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "dotenv": "^5.0.1",
     "express": "^4.15.3",
     "mongodb": "^2.2.27",
     "mongoose": "^4.10.2",
-    "pug": "^2.0.0-rc.1",
     "valid-url": "^1.0.9"
   }
 }

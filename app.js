@@ -5,11 +5,14 @@ var mongoose = require("mongoose")
 var base36 = require("./base36")
 var Url = require("./models/url")
 var validUrl = require('valid-url')
-var address = process.env.IP
-var port = (process.env.PORT || 3000)
+// var address = process.env.IP// used by cloud 9
+var port = process.env.PORT || 3000
+
+require("dotenv").load()
+var homeUrl = process.env.HOME_URL
 
 // mongoose.connect('mongodb://' + address + '/url_shortener')//local connection
-mongoose.connect(process.env.MONGOLAB_URI)//set via command line (export MONGOLAB_URI="mongodb://username:password@ds01316.mlab.com:1316/databasename")
+mongoose.connect(process.env.MONGOLAB_URI, {useMongoClient: true})//set via command line (eg. export MONGOLAB_URI="mongodb://username:password@ds01316.mlab.com:1316/databasename") or .env file in root directory (loaded via dotenv)
 
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
@@ -20,13 +23,21 @@ app.get('/', function(req, res) {
 })
 
 app.post('/api/shorten', function(req, res) {
-    var host = req.headers.referer//equates to homepage address
     var longUrl = req.body.url
+    handleShorten(req, res, longUrl)
+})
+
+app.get('/new/:longUrl(*)', function(req, res) {
+    var longUrl = req.params.longUrl
+    handleShorten(req, res, longUrl)
+})
+
+var handleShorten = function(req, res, longUrl) {
     var shortUrl = ''
     Url.findOne({long_url: longUrl}, function(err, doc) {
         if(err) throw err
         if (doc) {
-            shortUrl = host + base36.encode(doc._id)
+            shortUrl = homeUrl + base36.encode(doc._id)
             res.send({'longUrl': longUrl, 'shortUrl': shortUrl})
         }
         else if (!validUrl.isUri(longUrl)) {
@@ -36,39 +47,14 @@ app.post('/api/shorten', function(req, res) {
             var newUrl = Url({long_url: longUrl})
             newUrl.save(function(err) {
                 if (err) throw err
-                shortUrl = host + base36.encode(newUrl._id)
+                shortUrl = homeUrl + base36.encode(newUrl._id)
                 res.send({'longUrl': longUrl, 'shortUrl': shortUrl})
             })
         }
     })
-})
-
-app.get('/new/:longUrl(*)', function(req, res) {
-    var host = req.headers['x-forwarded-proto'] + '://' + req.headers.host + '/'
-    var longUrl = req.params.longUrl
-    var shortUrl = ''
-    Url.findOne({long_url: longUrl}, function(err, doc) {
-        if(err) throw err
-        if (doc) {
-            shortUrl = host + base36.encode(doc._id)
-            res.send({'longUrl': longUrl, 'shortUrl': shortUrl})
-        }
-        else if (!validUrl.isUri(longUrl)) {
-            res.send({"error": "Invalid url. Url must begin with 'http://' or 'https://' and have at least one '.' to be valid."})
-        }
-        else {
-            var newUrl = Url({long_url: longUrl})
-            newUrl.save(function(err) {
-                if (err) throw err
-                shortUrl = host + base36.encode(newUrl._id)
-                res.send({'longUrl': longUrl, 'shortUrl': shortUrl})
-            })
-        }
-    })
-})
+}
 
 app.get('/:shortUrl', function(req, res) {
-    var homepage = req.headers['x-forwarded-proto'] + '://' + req.headers.host + '/'
     var base36_id = req.params.shortUrl
     var id = base36.decode(base36_id)
     Url.findOne({_id: id}, function(err, doc) {
@@ -77,7 +63,7 @@ app.get('/:shortUrl', function(req, res) {
             res.redirect(doc.long_url)
         }
         else {
-            res.redirect(homepage)
+            res.redirect('/')
         }
     })
 })

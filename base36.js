@@ -1,7 +1,7 @@
-var radix = 36//must be between 2 and 36, should be > 10 to for 'encode' to act as a shortener
+var radix = 36//must be between 2 and 36, should be > 10 for 'encode' to act as a shortener
 
 function encode(num) {
-    return (num).toString(radix)
+    return num.toString(radix)
 }
 
 function decode(str) {
